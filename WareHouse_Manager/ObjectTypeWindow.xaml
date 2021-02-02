@@ -1,0 +1,135 @@
+﻿<Window x:Class="WareHouse_Manager.ObjectTypeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:WareHouse_Manager.UC"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:WareHouse_Manager"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontStyle="Normal"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Name="objectTypeWindow"
+        Title="Loại hàng" Height="300" Width="500">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title,ElementName=objectTypeWindow}">
+            </uc:ControlBarUC>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <materialDesign:Card
+                    Margin="5 10 5 10">
+                    <TextBox
+                        IsEnabled="{Binding EnableEdit}"
+                        Text="{Binding DisplayName}"
+                        Margin="15 0 15 0"
+                        FontSize="20"
+                        x:Name="CommentTextBox"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        materialDesign:HintAssist.Hint="Tên loại hàng" />
+                </materialDesign:Card>
+            </Grid>
+            <materialDesign:Card 
+                Grid.Row="1"
+                Margin="5 5 5 5"
+                Padding="0 5 0 5">
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.25*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.25*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.25*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.25*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                    Command="{Binding AddCommand}"
+                    CommandParameter="{Binding ElementName=objectTypeWindow}"
+                    Grid.Column="0"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Height="40"
+                    ToolTip="Resource name: MaterialDesignRaisedButton" 
+                    Margin="10 0 10 0">
+                        Thêm
+                    </Button>
+                    <Button
+                    Command="{Binding EditCommand}"
+                    CommandParameter="{Binding ElementName=objectTypeWindow}"
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Height="40"
+                    Margin="10 0 10 0"
+                    ToolTip="Resource name: MaterialDesignRaisedButton">
+                        Sửa
+                    </Button>
+                    <Button
+                    Command="{Binding DelCommand}"
+                    CommandParameter="{Binding ElementName=objectTypeWindow}"
+                    Grid.Column="2"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Height="40"
+                    Margin="10 0 10 0"
+                    ToolTip="Resource name: MaterialDesignRaisedButton">
+                        Xóa
+                    </Button>
+                    <Button
+                    Command="{Binding SaveCommand}"
+                    CommandParameter="{Binding ElementName=objectTypeWindow}"
+                    Grid.Column="3"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Height="40"
+                    Margin="10 0 10 0"
+                    ToolTip="Resource name: MaterialDesignRaisedButton">
+                        Lưu
+                    </Button>
+
+                </Grid>
+            </materialDesign:Card>
+
+            <Grid Grid.Row="2">
+                <materialDesign:Card
+                    VerticalAlignment="Stretch"
+                    Margin="5">
+                    <ScrollViewer  
+                    VerticalScrollBarVisibility="Visible">
+                        <ListView
+                            ItemsSource="{Binding ObjectTypes}"
+                            IsEnabled="{Binding IsEnabled}"
+                            SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
+                                    <GridViewColumn Header="Tên loại hàng" DisplayMemberBinding="{Binding NAME}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </materialDesign:Card>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
+

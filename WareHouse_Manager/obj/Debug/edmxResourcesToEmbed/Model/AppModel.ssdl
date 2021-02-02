@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WAREHOUSE_MANAGERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CUSTOMER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="100" />
+    <Property Name="ADDRESS" Type="nvarchar" MaxLength="100" />
+    <Property Name="PHONE" Type="nvarchar" MaxLength="10" />
+    <Property Name="EMAIL" Type="nvarchar" MaxLength="100" />
+    <Property Name="MORE_INFO" Type="nvarchar" MaxLength="1000" />
+    <Property Name="REGULAR" Type="int" />
+  </EntityType>
+  <EntityType Name="INPUT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="DATE_INPUT" Type="date" />
+    <Property Name="STATUS" Type="int" />
+  </EntityType>
+  <EntityType Name="INPUT_DETAIL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="INPUT_ID" Type="nvarchar" MaxLength="10" />
+    <Property Name="OBJECT_TYPE_ID" Type="int" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="100" />
+    <Property Name="SUPLIER_ID" Type="int" />
+    <Property Name="UNIT_ID" Type="int" />
+    <Property Name="AMOUNT" Type="int" />
+    <Property Name="IN_PRICE" Type="bigint" />
+    <Property Name="OUT_PRICE" Type="bigint" />
+  </EntityType>
+  <EntityType Name="OBJECT_TYPE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="OUTPUT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="DATE_OUTPUT" Type="date" />
+    <Property Name="CUSTOMER_ID" Type="int" />
+    <Property Name="STATUS" Type="int" />
+  </EntityType>
+  <EntityType Name="OUTPUT_DETAIL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OUTPUT_ID" Type="nvarchar" MaxLength="10" />
+    <Property Name="INPUT_DETAIL_ID" Type="int" />
+    <Property Name="AMOUNT" Type="int" />
+  </EntityType>
+  <EntityType Name="SUPLIER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="100" />
+    <Property Name="ADDRESS" Type="nvarchar" MaxLength="100" />
+    <Property Name="PHONE" Type="nvarchar" MaxLength="10" />
+    <Property Name="EMAIL" Type="nvarchar" MaxLength="100" />
+    <Property Name="MORE_INFO" Type="nvarchar" MaxLength="1000" />
+    <Property Name="CONSTRACT_DATE" Type="date" />
+  </EntityType>
+  <EntityType Name="UNIT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="USERS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="PASSWORD" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_CUSTOMER">
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OUTPUT" Type="Self.OUTPUT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OUTPUT">
+        <PropertyRef Name="CUSTOMER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INPUT">
+    <End Role="INPUT" Type="Self.INPUT" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="INPUT_DETAIL" Type="Self.INPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INPUT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPUT_DETAIL">
+        <PropertyRef Name="INPUT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INPUT_DETAIL">
+    <End Role="INPUT_DETAIL" Type="Self.INPUT_DETAIL" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OUTPUT_DETAIL" Type="Self.OUTPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INPUT_DETAIL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OUTPUT_DETAIL">
+        <PropertyRef Name="INPUT_DETAIL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OBJECT_TYPE">
+    <End Role="OBJECT_TYPE" Type="Self.OBJECT_TYPE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="INPUT_DETAIL" Type="Self.INPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OBJECT_TYPE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPUT_DETAIL">
+        <PropertyRef Name="OBJECT_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OUTPUT">
+    <End Role="OUTPUT" Type="Self.OUTPUT" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OUTPUT_DETAIL" Type="Self.OUTPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OUTPUT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OUTPUT_DETAIL">
+        <PropertyRef Name="OUTPUT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SUPLIER">
+    <End Role="SUPLIER" Type="Self.SUPLIER" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="INPUT_DETAIL" Type="Self.INPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SUPLIER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPUT_DETAIL">
+        <PropertyRef Name="SUPLIER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UNIT">
+    <End Role="UNIT" Type="Self.UNIT" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="INPUT_DETAIL" Type="Self.INPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UNIT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPUT_DETAIL">
+        <PropertyRef Name="UNIT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="AUTO_IDIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar" />
+  <Function Name="AUTO_IDOUT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar" />
+  <Function Name="AUTO_IDSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar" />
+  <EntityContainer Name="WAREHOUSE_MANAGERModelStoreContainer">
+    <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="INPUT" EntityType="Self.INPUT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="INPUT_DETAIL" EntityType="Self.INPUT_DETAIL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OBJECT_TYPE" EntityType="Self.OBJECT_TYPE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OUTPUT" EntityType="Self.OUTPUT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OUTPUT_DETAIL" EntityType="Self.OUTPUT_DETAIL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUPLIER" EntityType="Self.SUPLIER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UNIT" EntityType="Self.UNIT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CUSTOMER" Association="Self.FK_CUSTOMER">
+      <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+      <End Role="OUTPUT" EntitySet="OUTPUT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INPUT" Association="Self.FK_INPUT">
+      <End Role="INPUT" EntitySet="INPUT" />
+      <End Role="INPUT_DETAIL" EntitySet="INPUT_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INPUT_DETAIL" Association="Self.FK_INPUT_DETAIL">
+      <End Role="INPUT_DETAIL" EntitySet="INPUT_DETAIL" />
+      <End Role="OUTPUT_DETAIL" EntitySet="OUTPUT_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OBJECT_TYPE" Association="Self.FK_OBJECT_TYPE">
+      <End Role="OBJECT_TYPE" EntitySet="OBJECT_TYPE" />
+      <End Role="INPUT_DETAIL" EntitySet="INPUT_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OUTPUT" Association="Self.FK_OUTPUT">
+      <End Role="OUTPUT" EntitySet="OUTPUT" />
+      <End Role="OUTPUT_DETAIL" EntitySet="OUTPUT_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SUPLIER" Association="Self.FK_SUPLIER">
+      <End Role="SUPLIER" EntitySet="SUPLIER" />
+      <End Role="INPUT_DETAIL" EntitySet="INPUT_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UNIT" Association="Self.FK_UNIT">
+      <End Role="UNIT" EntitySet="UNIT" />
+      <End Role="INPUT_DETAIL" EntitySet="INPUT_DETAIL" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

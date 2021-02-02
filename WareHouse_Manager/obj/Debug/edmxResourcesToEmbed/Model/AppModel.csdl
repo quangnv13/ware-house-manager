@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WAREHOUSE_MANAGERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CUSTOMER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PHONE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MORE_INFO" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="REGULAR" Type="Int32" />
+    <NavigationProperty Name="OUTPUT" Relationship="Self.FK_CUSTOMER" FromRole="CUSTOMER" ToRole="OUTPUT" />
+  </EntityType>
+  <EntityType Name="INPUT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DATE_INPUT" Type="DateTime" Precision="0" />
+    <Property Name="STATUS" Type="Int32" />
+    <NavigationProperty Name="INPUT_DETAIL" Relationship="Self.FK_INPUT" FromRole="INPUT" ToRole="INPUT_DETAIL" />
+  </EntityType>
+  <EntityType Name="INPUT_DETAIL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="INPUT_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="OBJECT_TYPE_ID" Type="Int32" />
+    <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SUPLIER_ID" Type="Int32" />
+    <Property Name="UNIT_ID" Type="Int32" />
+    <Property Name="AMOUNT" Type="Int32" />
+    <Property Name="IN_PRICE" Type="Int64" />
+    <Property Name="OUT_PRICE" Type="Int64" />
+    <NavigationProperty Name="INPUT" Relationship="Self.FK_INPUT" FromRole="INPUT_DETAIL" ToRole="INPUT" />
+    <NavigationProperty Name="OUTPUT_DETAIL" Relationship="Self.FK_INPUT_DETAIL" FromRole="INPUT_DETAIL" ToRole="OUTPUT_DETAIL" />
+    <NavigationProperty Name="OBJECT_TYPE" Relationship="Self.FK_OBJECT_TYPE" FromRole="INPUT_DETAIL" ToRole="OBJECT_TYPE" />
+    <NavigationProperty Name="SUPLIER" Relationship="Self.FK_SUPLIER" FromRole="INPUT_DETAIL" ToRole="SUPLIER" />
+    <NavigationProperty Name="UNIT" Relationship="Self.FK_UNIT" FromRole="INPUT_DETAIL" ToRole="UNIT" />
+  </EntityType>
+  <EntityType Name="OBJECT_TYPE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="INPUT_DETAIL" Relationship="Self.FK_OBJECT_TYPE" FromRole="OBJECT_TYPE" ToRole="INPUT_DETAIL" />
+  </EntityType>
+  <EntityType Name="OUTPUT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DATE_OUTPUT" Type="DateTime" Precision="0" />
+    <Property Name="CUSTOMER_ID" Type="Int32" />
+    <Property Name="STATUS" Type="Int32" />
+    <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_CUSTOMER" FromRole="OUTPUT" ToRole="CUSTOMER" />
+    <NavigationProperty Name="OUTPUT_DETAIL" Relationship="Self.FK_OUTPUT" FromRole="OUTPUT" ToRole="OUTPUT_DETAIL" />
+  </EntityType>
+  <EntityType Name="OUTPUT_DETAIL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OUTPUT_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="INPUT_DETAIL_ID" Type="Int32" />
+    <Property Name="AMOUNT" Type="Int32" />
+    <NavigationProperty Name="INPUT_DETAIL" Relationship="Self.FK_INPUT_DETAIL" FromRole="OUTPUT_DETAIL" ToRole="INPUT_DETAIL" />
+    <NavigationProperty Name="OUTPUT" Relationship="Self.FK_OUTPUT" FromRole="OUTPUT_DETAIL" ToRole="OUTPUT" />
+  </EntityType>
+  <EntityType Name="SUPLIER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PHONE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MORE_INFO" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="CONSTRACT_DATE" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="INPUT_DETAIL" Relationship="Self.FK_SUPLIER" FromRole="SUPLIER" ToRole="INPUT_DETAIL" />
+  </EntityType>
+  <EntityType Name="UNIT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="INPUT_DETAIL" Relationship="Self.FK_UNIT" FromRole="UNIT" ToRole="INPUT_DETAIL" />
+  </EntityType>
+  <EntityType Name="USERS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_CUSTOMER">
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OUTPUT" Type="Self.OUTPUT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OUTPUT">
+        <PropertyRef Name="CUSTOMER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INPUT">
+    <End Role="INPUT" Type="Self.INPUT" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="INPUT_DETAIL" Type="Self.INPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INPUT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPUT_DETAIL">
+        <PropertyRef Name="INPUT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INPUT_DETAIL">
+    <End Role="INPUT_DETAIL" Type="Self.INPUT_DETAIL" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OUTPUT_DETAIL" Type="Self.OUTPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INPUT_DETAIL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OUTPUT_DETAIL">
+        <PropertyRef Name="INPUT_DETAIL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OBJECT_TYPE">
+    <End Role="OBJECT_TYPE" Type="Self.OBJECT_TYPE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="INPUT_DETAIL" Type="Self.INPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OBJECT_TYPE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPUT_DETAIL">
+        <PropertyRef Name="OBJECT_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SUPLIER">
+    <End Role="SUPLIER" Type="Self.SUPLIER" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="INPUT_DETAIL" Type="Self.INPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SUPLIER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPUT_DETAIL">
+        <PropertyRef Name="SUPLIER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UNIT">
+    <End Role="UNIT" Type="Self.UNIT" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="INPUT_DETAIL" Type="Self.INPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UNIT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPUT_DETAIL">
+        <PropertyRef Name="UNIT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OUTPUT">
+    <End Role="OUTPUT" Type="Self.OUTPUT" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OUTPUT_DETAIL" Type="Self.OUTPUT_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OUTPUT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OUTPUT_DETAIL">
+        <PropertyRef Name="OUTPUT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WAREHOUSE_MANAGEREntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" />
+    <EntitySet Name="INPUT" EntityType="Self.INPUT" />
+    <EntitySet Name="INPUT_DETAIL" EntityType="Self.INPUT_DETAIL" />
+    <EntitySet Name="OBJECT_TYPE" EntityType="Self.OBJECT_TYPE" />
+    <EntitySet Name="OUTPUT" EntityType="Self.OUTPUT" />
+    <EntitySet Name="OUTPUT_DETAIL" EntityType="Self.OUTPUT_DETAIL" />
+    <EntitySet Name="SUPLIER" EntityType="Self.SUPLIER" />
+    <EntitySet Name="UNIT" EntityType="Self.UNIT" />
+    <EntitySet Name="USERS" EntityType="Self.USERS" />
+    <AssociationSet Name="FK_CUSTOMER" Association="Self.FK_CUSTOMER">
+      <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+      <End Role="OUTPUT" EntitySet="OUTPUT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INPUT" Association="Self.FK_INPUT">
+      <End Role="INPUT" EntitySet="INPUT" />
+      <End Role="INPUT_DETAIL" EntitySet="INPUT_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INPUT_DETAIL" Association="Self.FK_INPUT_DETAIL">
+      <End Role="INPUT_DETAIL" EntitySet="INPUT_DETAIL" />
+      <End Role="OUTPUT_DETAIL" EntitySet="OUTPUT_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OBJECT_TYPE" Association="Self.FK_OBJECT_TYPE">
+      <End Role="OBJECT_TYPE" EntitySet="OBJECT_TYPE" />
+      <End Role="INPUT_DETAIL" EntitySet="INPUT_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SUPLIER" Association="Self.FK_SUPLIER">
+      <End Role="SUPLIER" EntitySet="SUPLIER" />
+      <End Role="INPUT_DETAIL" EntitySet="INPUT_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UNIT" Association="Self.FK_UNIT">
+      <End Role="UNIT" EntitySet="UNIT" />
+      <End Role="INPUT_DETAIL" EntitySet="INPUT_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OUTPUT" Association="Self.FK_OUTPUT">
+      <End Role="OUTPUT" EntitySet="OUTPUT" />
+      <End Role="OUTPUT_DETAIL" EntitySet="OUTPUT_DETAIL" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
